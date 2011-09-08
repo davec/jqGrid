@@ -1546,11 +1546,12 @@ $.fn.jqGrid = function( pin ) {
 				var rows = $("tbody:first > tr:gt(0)", ts.grid.bDiv);
 				base = to - rows.length;
 				ts.p.reccount = rows.length;
-				var rh = rows.outerHeight() || ts.grid.prevRowHeight;
+				var rh = rows.map(function() { return $(this).height(); }).sort().last()[0] || ts.grid.prevRowHeight;
 				if (rh) {
 					var top = base * rh;
 					var height = parseInt(ts.p.records,10) * rh;
 				    $(">div:first",ts.grid.bDiv).css({height : height}).children("div:first").css({height:top,display:top?"":"none"});
+				    rows.css({height : rh});
 				}
 				ts.grid.bDiv.scrollLeft = ts.grid.hDiv.scrollLeft;
 			}
